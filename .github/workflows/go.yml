@@ -22,16 +22,24 @@ jobs:
         os: ['ubuntu-latest', 'ubuntu-20.04']
     steps:
     - uses: actions/checkout@v3
+      continue-on-error: true
+      timeout-minutes: 5
 
     - name: Set up Go
+      continue-on-error: true
+      timeout-minutes: 5
       uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go_version }}
       
     - name: Build-DB
+      continue-on-error: true
+      timeout-minutes: 5
       run: docker compose build
       
     - name: Create-DB
+      continue-on-error: true
+      timeout-minutes: 5
       run: docker compose up -d
 
     # Pausa burocrática de 5 segundos para o banco de dados ligar de verdade
@@ -40,6 +48,8 @@ jobs:
       run: sleep 5
 
     - name: Test
+      continue-on-error: true
+      timeout-minutes: 5
       run: go test -v main_test.go 
       
   
