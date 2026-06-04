@@ -35,3 +35,5 @@ jobs:
         push: true
         # List of tags
         tags: taynan73/go_ci:${{ github.ref_name }}
+
+    
