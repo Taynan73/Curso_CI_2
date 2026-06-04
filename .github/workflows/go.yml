@@ -57,7 +57,7 @@ jobs:
     - name: Build
       run: go build -v main.go
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v7.0.1
+      uses: actions/upload-artifact@v4
       with:
     # Artifact name. If the `archive` input is `false`, the name of the file uploaded will be the artifact name.
         name: programa
