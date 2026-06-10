@@ -55,5 +55,4 @@ jobs:
             PASSWORD="${{ secrets.DBPASSWORD }}" \
             DBNAME="${{ secrets.DBNAME }}" \
             DBPORT="${{ secrets.DBPORT }}" \
-            PORT=8000 \
             nohup ./main > nohup.out 2> nohup.err < /dev/null &
