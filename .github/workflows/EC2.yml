@@ -36,10 +36,9 @@ jobs:
           chmod +x main
 
           env \
-            DB_HOST="${{ secrets.DBHOST }}" \
-            DB_USER="${{ secrets.DBUSER }}" \
-            DB_PASSWORD="${{ secrets.DBPASSWORD }}" \
-            DB_NAME="${{ secrets.DBNAME }}" \
-            DB_PORT="${{ secrets.DBPORT }}" \
+            HOST="${{ secrets.DBHOST }}" \
+            USER="${{ secrets.DBUSER }}" \
+            PASSWORD="${{ secrets.DBPASSWORD }}" \
+            DBNAME="${{ secrets.DBNAME }}" \
             PORT=8000 \
           nohup ./main > nohup.out 2> nohup.err < /dev/null &
