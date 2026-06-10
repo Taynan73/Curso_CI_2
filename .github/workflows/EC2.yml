@@ -1,0 +1,49 @@
+name: Entrega Contínua
+
+on:
+  workflow_call:
+
+jobs:
+  EC2: 
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+        # Artifact name
+          name: programa # optional
+      
+      - uses: actions/checkout@v3
+
+      - name: ssh deploy
+        # You may pin to the exact commit or the version.
+        # uses: easingthemes/ssh-deploy@ece05a22752e524363164bfb2f69a5ba4f8ded0d
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+            # Private key part of an SSH key pair
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            # Remote host
+            REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+            # Remote user
+            REMOTE_USER: ${{ secrets.REMOTE_USER }}
+            # Target directory
+            TARGET: /home/${{ secrets.REMOTE_USER}}
+            # paths to exclude separated by `,`, ie: `/dist/, /node_modules/`
+            EXCLUDE: "postgres-data"
+        
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            export HOST=${{ secrets.DBHOST }}
+            export USER=${{ secrets.DBUSER }}
+            export PASSWORD=${{ secrets.DBPASSWORD }}
+            export DBPORT=${{ secrets.DBPORT }}
+            export DBNAME=${{ secrets.DBNAME }}
+            export PORT=8000
+            chmod +x main
+            nohup ./main > nohup.out 2> nohup.err < /dev/null &
