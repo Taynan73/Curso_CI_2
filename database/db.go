@@ -2,6 +2,7 @@ package database
 
 import (
 	"log"
+	"strings"
 	"os"
 	"github.com/guilhermeonrails/api-go-gin/models"
 	"gorm.io/driver/postgres"
@@ -15,7 +16,15 @@ var (
 
 func ConectaComBancoDeDados() {
 	
-	stringDeConexao := "host="+os.Getenv("HOST")+" user="+os.Getenv("USER")+" password="+os.Getenv("PASSWORD")+" dbname="+os.Getenv("DBNAME")+" port="+os.Getenv("DBPORT")+" sslmode=disable"
+	// O strings.TrimSpace remove qualquer \n, \r ou espaço invisível do começo e do fim
+	host     := strings.TrimSpace(os.Getenv("HOST"))
+	user     := strings.TrimSpace(os.Getenv("USER"))
+	password := strings.TrimSpace(os.Getenv("PASSWORD"))
+	dbname   := strings.TrimSpace(os.Getenv("DBNAME"))
+	port     := strings.TrimSpace(os.Getenv("DBPORT"))
+
+	stringDeConexao := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable"
+	
 	DB, err = gorm.Open(postgres.Open(stringDeConexao))
 	if err != nil {
 		log.Panic("Erro ao conectar com banco de dados")
