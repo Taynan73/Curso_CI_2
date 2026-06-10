@@ -40,4 +40,5 @@ jobs:
             USER="${{ secrets.DBUSER }}" \
             PASSWORD="${{ secrets.DBPASSWORD }}" \
             DBNAME="${{ secrets.DBNAME }}" \
+            PORT=5432
           nohup ./main > nohup.out 2> nohup.err < /dev/null &
