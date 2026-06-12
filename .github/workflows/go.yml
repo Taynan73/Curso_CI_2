@@ -15,6 +15,7 @@ jobs:
       USER: root
       PASSWORD: root
       DBNAME: root
+      SSLMODE: disable
     strategy:
       matrix:
         go_version: ['1.18', '1.17', '>=1.18']

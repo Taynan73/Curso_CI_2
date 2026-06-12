@@ -31,6 +31,7 @@ jobs:
             PASSWORD=${{ secrets.DBPASSWORD }}
             DBNAME=${{ secrets.DBNAME }}
             DBPORT=${{ secrets.DBPORT }}
+            SSLMODE=require
             PORT=8000
 
       - name: Deploy Amazon ECS task definition
