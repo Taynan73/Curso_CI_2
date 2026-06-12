@@ -13,5 +13,6 @@ COPY ./main main
 RUN chmod +x main
 
 COPY ./templates/ templates/
+COPY ./assets/ assets/
 
 ENTRYPOINT [ "./main" ]
