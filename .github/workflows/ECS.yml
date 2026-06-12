@@ -33,7 +33,7 @@ jobs:
             DBPORT=${{ secrets.DBPORT }}
             PORT=8000
 
-      - name: Deploy Amazon ECS task definition
+      - name: Deploy in Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
