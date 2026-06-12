@@ -18,6 +18,9 @@ jobs:
       - name: Obtendo arquivo da tarefa
         run: aws ecs describe-task-definition --task-definition Tarefa_API-Go --query taskDefinition > task-definition.json
 
+      - name: Copia do task-definition
+        run: cp task-definition.json task-definition.json.old
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -41,3 +44,17 @@ jobs:
           service: Tarefa_API-Go
           cluster: API-Go-DEV
           wait-for-service-stability: true
+
+      - name: Requisicao
+        continue-on-error: true
+        run: echo "REQUEST=0" >> $GITHUB_ENV ; sleep 30s; wget loadbalancer:8000/bruno || echo "REQUEST=1" >> $GITHUB_ENV
+        
+      - name: Deploy Amazon ECS task definition
+        if: ${{ env.REQUEST != 0 }}
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: task-definition.json.old
+          service: Tarefa_API-Go
+          cluster: API-Go-DEV
+          wait-for-service-stability: true
+        
