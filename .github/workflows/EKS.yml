@@ -48,7 +48,7 @@ jobs:
       - run: kubectl delete secret generic dbuser --ignore-not-found
       - run: kubectl create secret generic dbuser --from-literal=USER=${{ secrets.DBUSER }}
 
-      - run: kubectl delete secret generic dbpasswod --ignore-not-found
+      - run: kubectl delete secret generic dbpassword --ignore-not-found
       - run: kubectl create secret generic dbpassword --from-literal=PASSWORD=${{ secrets.DBPASSWORD }}
 
       - run: kubectl delete secret generic dbname --ignore-not-found
